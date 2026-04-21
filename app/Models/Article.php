@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Str as SupportStr;
+use Psy\Util\Str;
 
 class Article extends Model
 {
@@ -25,5 +27,10 @@ class Article extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function readingTime(): string
+    {
+        return SupportStr::readingTime($this->content);
     }
 }
