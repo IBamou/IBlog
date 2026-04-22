@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content')->nullable();
             $table->enum('status', ['draft', 'published'])->default('draft');
+            $table->dateTime('published_date')->nullable();
             $table->foreignId('category_id')->nullable()->constrained('categories')->onDelete('set null');
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->timestamps();

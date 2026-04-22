@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Database\Factories\ArticleFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str as SupportStr;
-use Psy\Util\Str;
 
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'content', 'status', 'category_id', 'user_id'];
+    protected $fillable = ['title', 'content', 'status', 'category_id', 'user_id', 'published_date'];
+    protected $casts = [
+        'published_date' => 'datetime',
+    ];
 
     protected static function newFactory(): ArticleFactory
     {
