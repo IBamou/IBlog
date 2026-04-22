@@ -35,17 +35,17 @@ class ArticlePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Article $article): bool
+    public function update(User $user, Article $article): Response
     {
-        return $user->is($article->user);
+        return $user->is($article->user) ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Article $article): bool
+    public function delete(User $user, Article $article): Response
     {
-        return $user->is($article->user);
+        return $user->is($article->user) ? Response::allow() : Response::denyAsNotFound();
     }
 
     /**

@@ -4,32 +4,32 @@
             <div class="card-body">
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex gap-2">
-                        <div class="badge badge-primary badge-outline">{{ $category->name }}</div>
+                        <div class="badge badge-primary badge-outline">{{ $article->category->name }}</div>
                         @if($article->status === 'draft')
                         <div class="badge badge-warning">Draft</div>
                         @endif
                     </div>
                     <span class="text-sm text-base-content/60">{{ $article->created_at->format('F j, Y') }}</span>
                 </div>
-                
+
                 <h1 class="text-4xl font-bold mb-6">{{ $article->title }}</h1>
-                
+
                 <div class="flex items-center gap-3 mb-8 pb-6 border-b border-base-300">
                     <div class="bg-primary text-primary-content rounded-full w-12 h-12 flex items-center justify-center">
-                        <span class="text-lg font-semibold">{{ substr($writer->name, 0, 1) }}</span>
+                        <span class="text-lg font-semibold">{{ substr($article->user->name, 0, 1) }}</span>
                     </div>
                     <div>
-                        <p class="font-medium">{{ $writer->name }}</p>
+                        <p class="font-medium">{{ $article->user->name }}</p>
                         <p class="text-sm text-base-content/60">Author</p>
                     </div>
                 </div>
-                
+
                 <div class="prose prose-lg max-w-none">
                     <p class="whitespace-pre-wrap">{{ $article->content }}</p>
                 </div>
-                
+
                 <div class="divider"></div>
-                
+
                 <div class="flex flex-wrap gap-3">
                     <a href="{{ route('articles.index') }}" class="btn btn-ghost btn-sm">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
-use App\Models\User;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,14 +52,11 @@ class ArticleController extends Controller
             'status' => 'in:published,draft'
         ]);
 
-        $validated['user_id'] = Auth::id();
-        $status = $request->input('status');
-        $validated['status'] = $status;
-
         if ($validated['status'] === 'published') {
             $validated['published_date'] = now();
         }
-        
+        $user = Auth::user();
+        $validated['user_id'] = $user->id;
         Article::create($validated);
         return redirect()->route('my.articles', ['status' => $validated['status']])->with('success', 'Article created successfully.');
 
@@ -71,15 +67,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        $article = Article::findOrFail($article->id);
-
-        if ($article->status === 'draft' && (!Auth::check() || Auth::id() !== $article->user_id)) {
-            abort(404);
-        }
-
-        $writer = User::findOrFail($article->user_id);
-        $category = Category::findOrFail($article->category_id);
-        return view('articles.show', compact('article', 'writer', 'category'));
+        return view('articles.show', compact('article'));
     }
 
     /**
@@ -87,9 +75,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        if (!Auth::check() || Auth::id() !== $article->user_id) {
-            abort(404);
-        }
+        Gate::authorize('update', $article);
         $categories = Category::all();
         return view('articles.edit', compact('article', 'categories'));
     }
@@ -99,16 +85,12 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        if (!Auth::check() || Auth::id() !== $article->user_id) {
-            abort(404);
-        }
+        Gate::authorize('update', $article);
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'content' => 'required|string',
         ]);
-
-        $validated['status'] = $request->input('status') ?? $article->status;
 
         $article->update($validated);
         return redirect()->route('my.articles', ['status' => $validated['status']])->with('success', 'Article updated successfully.');
@@ -119,18 +101,14 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        if (!Auth::check() || Auth::id() !== $article->user_id) {
-            abort(404);
-        }
+        Gate::authorize('delete', $article);
         $article->delete();
         return redirect()->route('articles.index')->with('success', 'Article deleted successfully.');
     }
 
     public function publish(Article $article)
     {
-        if (!Auth::check() || Auth::id() !== $article->user_id) {
-            abort(404);
-        }
+        Gate::authorize('update', $article);
         $article->update([
             'status' => 'published',
             'published_date' => now()
@@ -140,8 +118,8 @@ class ArticleController extends Controller
 
     public function myArticles($status = 'published', Request $request)
     {
-        $query = Article::where('user_id', Auth::id())
-            ->where('status', $status);
+        $user = Auth::user();
+        $query = Article::where('user_id', $user->id)->where('status', $status);
 
         if ($request->has('search') && $request->search) {
             $query->where('title', 'like', '%' . $request->search . '%');
