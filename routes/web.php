@@ -15,6 +15,7 @@ Route::get('/articles/{article}/edit', [ArticleController::class, 'edit'])->name
 Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
 Route::put('/articles/{article}', [ArticleController::class, 'update'])->name('articles.update')->middleware('auth');
 Route::delete('/articles/{article}', [ArticleController::class, 'destroy'])->name('articles.destroy')->middleware('auth');
+Route::patch('/articles/{article}/publish', [ArticleController::class, 'publish'])->name('articles.publish')->middleware('auth');
 Route::get('/articles/my/articles/{status}', [ArticleController::class, 'myArticles'])->name('my.articles')->middleware('auth');
 Route::get('/articles/my/articles', function () {
     return redirect()->route('my.articles', 'published');

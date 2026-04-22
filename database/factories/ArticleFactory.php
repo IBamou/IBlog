@@ -13,10 +13,13 @@ class ArticleFactory extends Factory
     {
         return [
             'title' => $this->faker->sentence(3),
-            'content' => $this->faker->paragraphs(5, true),
+            'content' => $this->faker->paragraphs(30, true),
             'status' => $this->faker->randomElement(['draft', 'published']),
-            'category_id' => Category::factory(),
-            'user_id' => User::factory(),
+            'published_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'category_id' => $this->faker->randomElement(Category::pluck('id')->toArray()),
+            'user_id' =>$this->faker->randomElement(User::pluck('id')->toArray()),
+            // 'category_id' => Category::factory(),
+            // 'user_id' => User::factory(),
         ];
     }
 }
