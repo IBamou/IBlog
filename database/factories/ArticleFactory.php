@@ -18,8 +18,6 @@ class ArticleFactory extends Factory
             'published_date' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'category_id' => $this->faker->randomElement(Category::pluck('id')->toArray()),
             'user_id' =>$this->faker->randomElement(User::pluck('id')->toArray()),
-            // 'category_id' => Category::factory(),
-            // 'user_id' => User::factory(),
         ];
     }
 }

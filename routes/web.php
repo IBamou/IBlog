@@ -3,8 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProfileController;
 
 Route::get('/', function () {
+    return view('home');
+})->name('home');
+
+Route::get('/home', function () {
     return view('home');
 })->name('home');
 
@@ -23,9 +28,16 @@ Route::get('/articles/my/articles', function () {
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
 
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show')->middleware('auth');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login']);
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
 });
+
+
+
+

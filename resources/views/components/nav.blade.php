@@ -51,7 +51,8 @@
                         <ul class="p-2 bg-base-100 shadow-lg rounded-box mt-2">
                             <li><a href="{{ route('my.articles', 'published') }}">Published</a></li>
                             <li><a href="{{ route('my.articles', 'draft') }}">Draft</a></li>
-                            <li><a href="{{ route('articles.create') }}">Write One</a></li>
+                            <li><a href="{{ route('profile.show') }}">Profile</a></li>
+                        <li><a href="{{ route('articles.create') }}">Write One</a></li>
                         </ul>
                     </details>
                 </li>
@@ -97,6 +98,7 @@
                     <li class="menu-title px-2 py-1">
                         <span class="text-sm font-medium">{{ Auth::user()->name }}</span>
                     </li>
+                    <li><a href="{{ route('profile.show') }}">Profile</a></li>
                     <li><a href="{{ route('articles.create') }}">Write Article</a></li>
                     <li><a href="{{ route('my.articles', 'published') }}">My Published</a></li>
                     <li><a href="{{ route('my.articles', 'draft') }}">My Drafts</a></li>

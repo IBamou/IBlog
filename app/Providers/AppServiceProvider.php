@@ -37,6 +37,16 @@ class AppServiceProvider extends ServiceProvider
             // Optional: handle very short texts
             return $minutes;
         });
+
+
+        // Setup Default User
+        if (!User::count()) {
+            User::create([
+                'name' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => bcrypt('admin123'),
+            ]);
+        }
     }
 
 }

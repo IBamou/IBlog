@@ -1,5 +1,82 @@
 @import 'tailwindcss';
 
+.hover-3d {
+    transform-style: preserve-3d;
+    transform: perspective(1000px);
+}
+
+.hover-3d > *:nth-child(1) {
+    transition: transform 0.2s;
+}
+
+.hover-3d:hover > *:nth-child(1) {
+    transform: translateZ(30px);
+}
+
+.hover-3d > div:nth-child(2) {
+    transition: transform 0.2s 0.05s;
+}
+
+.hover-3d:hover > div:nth-child(2) {
+    transform: translateZ(26px);
+}
+
+.hover-3d > div:nth-child(3) {
+    transition: transform 0.2s 0.1s;
+}
+
+.hover-3d:hover > div:nth-child(3) {
+    transform: translateZ(22px);
+}
+
+.hover-3d > div:nth-child(4) {
+    transition: transform 0.2s 0.15s;
+}
+
+.hover-3d:hover > div:nth-child(4) {
+    transform: translateZ(18px);
+}
+
+.hover-3d > div:nth-child(5) {
+    transition: transform 0.2s 0.2s;
+}
+
+.hover-3d:hover > div:nth-child(5) {
+    transform: translateZ(14px);
+}
+
+.hover-3d > div:nth-child(6) {
+    transition: transform 0.2s 0.25s;
+}
+
+.hover-3d:hover > div:nth-child(6) {
+    transform: translateZ(10px);
+}
+
+.hover-3d > div:nth-child(7) {
+    transition: transform 0.2s 0.3s;
+}
+
+.hover-3d:hover > div:nth-child(7) {
+    transform: translateZ(6px);
+}
+
+.hover-3d > div:nth-child(8) {
+    transition: transform 0.2s 0.35s;
+}
+
+.hover-3d:hover > div:nth-child(8) {
+    transform: translateZ(2px);
+}
+
+.hover-3d > div:nth-child(9) {
+    transition: transform 0.2s 0.4s;
+}
+
+.hover-3d:hover > div:nth-child(9) {
+    transform: translateZ(-2px);
+}
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
